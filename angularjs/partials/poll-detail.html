@@ -1,0 +1,27 @@
+<div class="{{getColor(poll.id)}}" style="overflow: auto;">
+    <div class="container">
+        <h1 class="white-text">{{poll.title}}</h1>
+    </div>
+</div>
+
+<div class="container">
+
+    <h4 class="grey-text">{{poll.question}}</h4>
+
+    <div class="row">
+        <form class="col s12">
+            <p ng-repeat="choice in poll.choices">
+                <input class="with-gap" name="group2" type="radio" ng-model="$parent.vote" ng-value={{$index}} id="poll-choice-{{$index}}">
+                <label for="poll-choice-{{$index}}">{{choice}}</label>
+            </p>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col sm12">
+            <a href="#/polls/{{poll.id}}" ng-click="saveVote()" class="waves-effect waves-light btn">Save Vote</a>
+            <a href="#/polls" class="waves-effect waves-light btn red">Cancel</a>
+        </div>
+    </div>
+
+</div>

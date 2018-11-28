@@ -1,0 +1,31 @@
+
+<ng-include src="'angularjs/partials/nav.html'"></ng-include>
+
+<div class="container">
+    <h1>Opinion Polls</h1>
+
+    <p>Welcome to my opinion polls aplication. There are a number of polls listed below that you can participate in. Just click 'Vote in Poll' to go to the poll and cast your vote.</p>
+
+    <div class="row">
+      <div class="col s12 m6" ng-repeat="poll in polls">
+        <div class="card {{getColor(poll.id)}} darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">{{poll.title}}</span>
+            <p>{{poll.question}}</p>
+          </div>
+          <div class="card-action">
+            <a href="#/polls/{{poll.id}}">Vote In Poll</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col sm12">
+            <a href="#/admin/polls" class="btn">View As Admin</a>
+        </div>
+    </div>
+
+</div>

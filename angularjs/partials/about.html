@@ -1,0 +1,93 @@
+<ng-include src="'angularjs/partials/nav.html'"></ng-include>
+
+<div class="container">
+    <h1>About</h1>
+
+    <div class="card-panel">
+        <pre><code><b>Name:</b> Simon Merrick</code></pre>
+        <pre><code><b>Student ID:</b> 58760062</code></pre>
+        <pre><code><b>Date:</b> Sunday 29th May, 2016 </code></pre>
+    </div>
+
+    <div class="row">
+        <div class="col m6">
+
+            <h3>Front End</h3>
+
+            <article>
+                <h5>The User Views</h5>
+
+                <p>Upon loading the home page the user will be presented with a list of polls that they can to vote in. Click the "VOTE IN POLL" link to go to the poll.</p>
+
+                <p>To vote the select a option from the list of options and click "Save Vote".</p>
+
+                <p> If the vote was saved successfully the user will be returned to the poll list view.</p>
+
+                <p>A feature that I would like to have implemented is having the poll disapear from the poll list view once the user has voted however, as per the request of the markers, features preventing the user from repeatedly voting have not been implemented.</p>
+            </article>
+
+            <article>
+                <h5>The Administrator Views</h5>
+
+                <p>The user can change to the administrator view by clicking the "VIEW AS ADMIN" button at the bottom of the poll list view. They can change back to the standard user mode by clicking the button again</p>
+
+                <p><strong>The administrator poll list view looks very similar to the standard user view</strong> however instead of having a link to particpate in the poll at the bottom of each tile, the administrator will see a link to see the poll results.</p>
+            </article>
+
+        <article>
+            <h5>Framework (Materialize)</h5>
+                <p>With the exception of a naughty little inline hack in the poll details and poll results views (<code>style="overflow: auto;"</code>) all of the styles come from the <a href="http://materializecss.com/">Materialize</a> framework.</p>
+
+                <p>While little original CSS was written by me, particular care was given to the UI to try and make it very usable.</p>
+
+                <p><strong>A notable feature</strong> that I implemented was coordinating the color of the card/tile background on the poll list view with the color of the header in the poll details view. This is visible in both the standard user and adminstrator views.</p>
+            </article>
+
+            <article>
+                <h5>404 Page</h5>
+                <p>I added an extra view to the application to act as a 404 landing page. The application will redirect the user to a landing page if the XHR request to the web service while loading a view replies with a 404 response status. The redirect is triggered in the error callback of the XHR request.</p>
+            </article>
+
+            <article>
+                <h5>Re-Usable Navbar Partial</h5>
+                <p>Since the navbar displayed on the poll list views for the standard user, administrator and 404 page are identical it was separated into its own partial, or html fragement and is included into the view using the <code ng-non-bindable>ng-include</code> directive.</p>
+            </article>
+        </div>
+
+        <div class="col m6">
+
+            <h3>Back End</h3>
+
+            <article>
+                <h5>Web Service</h5>
+                <p>For implementing the web service I opted to use CodeIgniter since I was familiar with it from Assignment One.</p>
+
+                <p>As per the Codeigniter setup suggested by Matthew, the application constsists of two controllers; <code>Services.php</code> and <code>Polls.php</code>, and one model; <code>Poll.php</code>. The <code>Polls</code> controller just loads the Angular.js single page application while the <code>Services</code> controller contains the implementation for the web service, utilising the <code>Poll</code> model for persistence to the database.</p>
+            </article>
+
+            <article>
+                <h5>Routing</h5>
+                <p><code>HTTP</code> requests to the web service are routed to the various methods of the Services controller based not only on the URI requested but the <code>HTTP</code> request method used. </p>
+                <div class="card-panel">
+                    <pre><code>$route['services/votes/(:num)']['get'] = 'services/countPollVotes/$1';
+$route['services/votes/(:num)']['delete'] = 'services/resetPoll/$1';</code></pre>
+                </div></code>
+                <p>Handling the <code>HTTP</code> request at the router level allowed me to separate out the methods in the services controller and avoid exessive <code>if</code> or <code>switch</code> statement blocks, significiantly improving code readability and general quality.</p>
+            </article>
+
+            <article>
+                <h5>Database Schema</h5>
+                <p>The database consists of three tables; <code>Poll</code>, <code>PollChoice</code> and <code>Vote</code>. The schema is shown below.</p>
+                <div class="card-panel">
+                    <pre><code><b>Poll</b> (<u>id</u>, title, question);</code></pre>
+                    <pre><code><b>PollChoice</b> (<u>pollId</u>, <u>choiceNo</u>, choiceText);</code></pre>
+                    <pre><code><b>Vote</b> (<u>pollId</u>, <u>choiceNo</u>, <u>ipAddress</u>);</code></pre>
+                </div>
+                <p>While each tuple in the <code>Poll</code> table is identified by a unique <code>id</code> attribute, tuples in the <code>PollChoice</code> and <code>Vote</code> tables are identified by a combination of <code>pollId</code> and <code>choiceNo</code>, where <code>choiceNo</code> specifies an index within the scope of a single poll. Tuples in the <code>Votes</code> table are further uniquely identified by the <code>ipAddress</code> attribute which stores the ip address of the voter.</p>
+                <p>Aggregation of data such as the number of votes for each option in a poll is implemented in the model and controller.</p>
+            </article>
+
+        </div>
+    </div>
+
+</div>

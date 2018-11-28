@@ -1,0 +1,31 @@
+<ng-include src="'angularjs/partials/nav.html'"></ng-include>
+
+<div class="container">
+
+    <h1>Opinion Polls</h1>
+
+    <p>Welcome administrator! From this screen you can see the active polls that users can participate in. You can veiw responses to a poll by clicking 'Poll Results'.</p>
+
+    <div class="row">
+        <div class="col s12 m6" ng-repeat="poll in polls">
+            <div class="card {{getColor(poll.id)}} darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title" ng-bind="poll.title"></span>
+                    <p ng-bind="poll.question"></p>
+                </div>
+                <div class="card-action">
+                    <a href="#admin/polls/{{poll.id}}">Poll Results</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col sm12">
+            <a href="#/polls" class="btn">View As User</a>
+        </div>
+    </div>
+
+</div>

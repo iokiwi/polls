@@ -1,0 +1,25 @@
+<div class="{{getColor(poll.id)}}" style="overflow: auto;">
+    <div class="container">
+        <h1 class="white-text">{{poll.title}}</h1>
+    </div>
+</div>
+
+<div class="container">
+
+    <h4 class="grey-text">{{poll.question}}</h4>
+
+    <a href="#/polls/{{poll.id}}" class="waves-effect waves-light btn">Go To Poll</a>
+    <a href="#/admin/polls/{{poll.id}}" class="waves-effect waves-light btn red" ng-click="resetVotes()">Reset Poll</a>
+
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>{{total}} Response(s)</h4></li>
+        <li class="collection-item" ng-repeat="result in results"><div>{{result.text}}<a href="#!" class="secondary-content" ng-bind="result.count"></a></div></li>
+    </ul>
+
+    <div class="row">
+        <div class="col sm12">
+            <a href="#/admin/polls" class="waves-effect waves-light btn">Back</a>
+        </div>
+    </div>
+
+</div>
